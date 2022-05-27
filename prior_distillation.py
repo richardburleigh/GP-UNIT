@@ -132,9 +132,9 @@ def train(args, udataloader, pdataloader, netAE, optimizer_AE, vgg_loss, device=
 
         if idx == 0 or (idx+1) % args.visualize_every == 0 or (idx+1) == args.iter:
             viznum = min(args.batch, 4)
-            masks = F.interpolate(masks, size=256)
-            recon_masks = F.interpolate(recon_masks, size=256)
-            trans_masks = F.interpolate(trans_masks, size=256)
+            masks = F.interpolate(masks, size=512)
+            recon_masks = F.interpolate(recon_masks, size=512)
+            trans_masks = F.interpolate(trans_masks, size=512)
 
             sample = F.adaptive_avg_pool2d(torch.cat((imgs[0:viznum], masks[0:viznum],
                                                     recon_imgs[0:viznum], recon_masks[0:viznum],
