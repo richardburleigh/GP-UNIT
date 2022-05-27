@@ -64,7 +64,7 @@ class Discriminator(BaseNetwork):
         blocks = []
         blocks += [spectral_norm(nn.Conv2d(3, dim_in, 3, 1, 1))]
 
-        repeat_num = int(np.log2(256)) - 2
+        repeat_num = int(np.log2(512)) - 2
         for _ in range(repeat_num):
             dim_out = min(dim_in*2, max_conv_dim)
             blocks += [ResnetBlock(dim_in, dim_out, downsample=True)]
