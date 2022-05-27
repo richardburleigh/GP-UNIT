@@ -98,7 +98,7 @@ def get_params(preprocess_mode, load_size, crop_size, size):
     return {'crop_pos': (x, y), 'flip': flip}
 
 
-def get_transform(params, preprocess_mode='resize_and_crop', load_size=286, crop_size=256, aspect_ratio=1.0, flip=True, 
+def get_transform(params, preprocess_mode='resize_and_crop', load_size=512, crop_size=512, aspect_ratio=1.0, flip=True, 
                   method=Image.BILINEAR, normalize=True, toTensor=True, colorjitter=False):
     transform_list = []
     if 'resize' in preprocess_mode:
@@ -187,7 +187,7 @@ def __flip(img, flip):
 
 class UnpairedDataset(data.Dataset):
     def initialize(self, sfiles, tfiles, sdataset_sizes, tdataset_sizes,
-                   preprocess_mode='resize_and_crop', load_size=286, crop_size=256):
+                   preprocess_mode='resize_and_crop', load_size=512, crop_size=512):
         
         self.source_paths = []
         self.target_paths = []
@@ -248,7 +248,7 @@ class UnpairedDataset(data.Dataset):
 
 
 def create_unpaired_dataloader(sfiles, tfiles, sdataset_sizes, tdataset_sizes, batchSize=16, shuffle=True, nworkers=4,  
-                   preprocess_mode='resize_and_crop', load_size=286, crop_size=256):
+                   preprocess_mode='resize_and_crop', load_size=512, crop_size=512):
     unpairdataset = UnpairedDataset()
     unpairdataset.initialize(sfiles, tfiles, sdataset_sizes, tdataset_sizes, preprocess_mode, load_size, crop_size)
     print("dataset [%s] of size %d was created" %  (type(unpairdataset).__name__, len(unpairdataset)))
@@ -264,7 +264,7 @@ def create_unpaired_dataloader(sfiles, tfiles, sdataset_sizes, tdataset_sizes, b
 
 class ImageMaskLabelDataset(data.Dataset):
     def initialize(self, imgroot, maskroot, files, dataset_sizes, labels, 
-                   preprocess_mode='resize_and_crop', load_size=286, crop_size=256, pair=False):
+                   preprocess_mode='resize_and_crop', load_size=512, crop_size=512, pair=False):
         
         self.image_paths = []
         
@@ -348,7 +348,7 @@ class ImageMaskLabelDataset(data.Dataset):
         return self.dataset_size 
     
 def create_imagemasklabel_dataloader(imgroot, maskroot, files, dataset_sizes, labels, batchSize=16, shuffle=True, nworkers=4,  
-                   preprocess_mode='resize_and_crop', load_size=286, crop_size=256, pair=False):
+                   preprocess_mode='resize_and_crop', load_size=512, crop_size=512, pair=False):
     imagemasklabeldataset = ImageMaskLabelDataset()
     imagemasklabeldataset.initialize(imgroot, maskroot, files, dataset_sizes, labels, preprocess_mode, load_size, crop_size, pair)
     print("dataset [%s] of size %d was created" %  (type(imagemasklabeldataset).__name__, len(imagemasklabeldataset)))
