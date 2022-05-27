@@ -7,7 +7,7 @@ from model.base_network import BaseNetwork, AdaptiveInstanceNorm
 # https://github.com/NVlabs/SPADE/blob/master/models/networks/
     
 class AdaResnetBlock(BaseNetwork):
-    def __init__(self, fin, fout, style_nc = 256):
+    def __init__(self, fin, fout, style_nc = 512):
         super(AdaResnetBlock, self).__init__()
         # Attributes
         self.learned_shortcut = (fin != fout)
@@ -108,7 +108,7 @@ class Generator(BaseNetwork):
 
         self.mlplayers = 2
         self.compress_nc = 64
-        self.style_code_nc = 256
+        self.style_code_nc = 512
         self.style_encoder = StyleEncoder(mlp_nlayers=self.mlplayers, compress_nc=self.compress_nc, style_code_nc=self.style_code_nc)
         
         sequence = []
@@ -173,7 +173,7 @@ class StyleEncoder(BaseNetwork):
     Set mlplayers = N to use N layers for the transform of style code
     Set compress_nc = N to transform 512-channel style code to N channels and then back to style_code_nc=256 channels
     """    
-    def __init__(self, nef=64, enc_nlayers=5, mlp_nlayers=1, compress_nc=64, style_code_nc=256):
+    def __init__(self, nef=64, enc_nlayers=5, mlp_nlayers=1, compress_nc=64, style_code_nc=512):
         super(StyleEncoder, self).__init__()
         
         sequence = []
