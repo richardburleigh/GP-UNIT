@@ -34,7 +34,7 @@ class Predictor(BasePredictor):
         self.netEC.eval()
         self.netG = Generator()
         self.netG.eval()
-        self.sampler = ICPTrainer(np.empty([0, 256]), 128)
+        self.sampler = ICPTrainer(np.empty([0, 512]), 128)
 
     def predict(
         self,
@@ -44,11 +44,11 @@ class Predictor(BasePredictor):
             description="Choose style type.",
         ),
         content: Path = Input(
-            description="Input content image, it will be resized to 256",
+            description="Input content image, it will be resized to 512",
         ),
         style: Path = Input(
             default=None,
-            description="Input style image, it will be resized to 256",
+            description="Input style image, it will be resized to 512",
         ),
     ) -> Path:
 
@@ -70,11 +70,11 @@ class Predictor(BasePredictor):
         print("Model successfully loaded!")
 
         Ix = F.interpolate(
-            load_image(str(content)), size=256, mode="bilinear", align_corners=True
+            load_image(str(content)), size=512, mode="bilinear", align_corners=True
         )
         if style is not None:
             Iy = F.interpolate(
-                load_image(str(style)), size=256, mode="bilinear", align_corners=True
+                load_image(str(style)), size=512, mode="bilinear", align_corners=True
             )
 
         #seed = 233
