@@ -44,7 +44,7 @@ if __name__ == "__main__":
     netEC.eval()
     netG = Generator()
     netG.eval()
-    sampler = ICPTrainer(np.empty([0,256]), 128)
+    sampler = ICPTrainer(np.empty([0,512]), 128)
     
     netEC.load_state_dict(torch.load(args.content_encoder_path, map_location=lambda storage, loc: storage))
     ckpt = torch.load(args.generator_path, map_location=lambda storage, loc: storage)
@@ -67,12 +67,12 @@ if __name__ == "__main__":
     with torch.no_grad():
         viz = []
         # load content image and comuput content features
-        Ix = F.interpolate(load_image(args.content), size=256, mode='bilinear', align_corners=True)
+        Ix = F.interpolate(load_image(args.content), size=512, mode='bilinear', align_corners=True)
         content_feature = netEC(Ix.to(device), get_feature=True)
         
         # perform translation
         if args.style is not None:
-            Iy = F.interpolate(load_image(args.style), size=256, mode='bilinear', align_corners=True)
+            Iy = F.interpolate(load_image(args.style), size=512, mode='bilinear', align_corners=True)
             I_yhat, _ = netG(content_feature, Iy.to(device))
         else:
             style_features = sampler.icp.netT(torch.randn(args.batch, 128).to(device))
