@@ -94,8 +94,8 @@ class ContentEncoder(BaseNetwork):
         )
 
     def forward(self, x, get_feature=False):
-        if x.size(2) != 256 or x.size(3) != 256:
-            x = F.interpolate(x, size=(256, 256), mode='bilinear')
+        if x.size(2) != 512 or x.size(3) != 512:
+            x = F.interpolate(x, size=(512, 512), mode='bilinear')
         c1 = self.layer1(x)
         c2 = self.layer2(c1)
         c3 = self.layer3(c2)
